@@ -29,7 +29,7 @@ module Hangman
           return
         end
       end
-      puts 'You have failed to guess the word'
+      puts "You have failed to guess the word: \"#{@word}\""
     end
 
     def new_word
@@ -48,22 +48,16 @@ module Hangman
     end
 
     def print_hint
-      puts
       print_word
-      puts
       print_guesses('Wrong', @wrong_guess)
       print_guesses('Right', @right_guess)
-      puts "You have #{@wrong_guesses} wrong guesses left"
-      puts
+      print "You have #{@wrong_guesses} wrong guesses left\n\n"
     end
 
     def print_word
+      puts
       @word.split('').each do |letter|
-        if @right_guess.include?(letter)
-          print "#{letter} "
-        else
-          print '_ '
-        end
+        print @right_guess.include?(letter) ? "#{letter} " : '_ '
       end
       puts
     end
