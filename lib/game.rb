@@ -24,14 +24,18 @@ module Hangman
         guess = @guesser.guess
         record_guess(guess)
         print_hint
+        if @right_guess.sort == @letters.sort
+          puts 'You have guessed the word'
+          return
+        end
       end
+      puts 'You have failed to guess the word'
     end
 
     def new_word
       words = File.read('assets/google-10000-english-no-swears.txt').split
       @word = words.sample until @word.length < 13 && @word.length > 4
       @letters = @word.split('').uniq
-      p @word
     end
 
     def record_guess(letter)
@@ -61,13 +65,13 @@ module Hangman
           print '_ '
         end
       end
-      puts ''
+      puts
     end
 
     def print_guesses(category, array)
       print "#{category}: "
       array.each { |letter| print "#{letter} " }
-      puts ''
+      puts
     end
   end
 end
