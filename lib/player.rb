@@ -10,7 +10,7 @@ module Hangman
     def guess
       loop do
         print 'Pick a letter: '
-        letter = gets.chomp
+        letter = gets.chomp.downcase
         next if guess_includes?(letter)
         return letter unless letter.length != 1
       end
