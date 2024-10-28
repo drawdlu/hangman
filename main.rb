@@ -6,4 +6,5 @@ require_relative 'lib/game'
 module Hangman
   game = Game.new
   game.new_word
+  game.play
 end
