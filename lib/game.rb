@@ -8,7 +8,7 @@ module Hangman
   class Game
     attr_reader :wrong_guess, :right_guess, :guesser
 
-    MAX_TURNS = 6
+    MAX_WRONG_GUESS = 6
 
     def initialize
       @guesser = Player.new(self)
@@ -16,13 +16,14 @@ module Hangman
       @letters = nil
       @wrong_guess = []
       @right_guess = []
-      @guesses = 0
+      @wrong_guesses = MAX_WRONG_GUESS
     end
 
     def play
-      while @guesses < MAX_TURNS
+      while @wrong_guesses.positive?
         guess = @guesser.guess
         record_guess(guess)
+        print_hint
       end
     end
 
@@ -30,15 +31,43 @@ module Hangman
       words = File.read('assets/google-10000-english-no-swears.txt').split
       @word = words.sample until @word.length < 13 && @word.length > 4
       @letters = @word.split('').uniq
-      p @letters
+      p @word
     end
 
     def record_guess(letter)
       if @letters.include?(letter)
         @right_guess << letter
       else
+        @wrong_guesses -= 1
         @wrong_guess << letter
       end
+    end
+
+    def print_hint
+      puts
+      print_word
+      puts
+      print_guesses('Wrong', @wrong_guess)
+      print_guesses('Right', @right_guess)
+      puts "You have #{@wrong_guesses} wrong guesses left"
+      puts
+    end
+
+    def print_word
+      @word.split('').each do |letter|
+        if @right_guess.include?(letter)
+          print "#{letter} "
+        else
+          print '_ '
+        end
+      end
+      puts ''
+    end
+
+    def print_guesses(category, array)
+      print "#{category}: "
+      array.each { |letter| print "#{letter} " }
+      puts ''
     end
   end
 end
