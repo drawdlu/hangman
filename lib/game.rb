@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'player'
+require 'yaml'
 
 # Hangmane game on terminal
 module Hangman
@@ -71,7 +72,32 @@ module Hangman
     end
 
     def save
+      file_name = choose_name
+      create_save_directory
+      save_to_file(file_name)
       puts 'Successfully saved the game'
+    end
+
+    def choose_name
+      puts
+      print 'Type a file name for your save file: '
+      gets.chomp
+    end
+
+    def create_save_directory
+      Dir.mkdir 'assets/saves' unless Dir.exist? 'assets/saves'
+    end
+
+    def save_to_file(file_name)
+      serialized = YAML.dump self
+      file = if File.exist?("assets/saves/#{file_name}.yaml")
+               File.open("assets/saves/#{file_name}.yaml", 'w')
+
+             else
+               File.new("assets/saves/#{file_name}.yaml", 'w')
+             end
+      file.write(serialized)
+      file.close
     end
   end
 end
