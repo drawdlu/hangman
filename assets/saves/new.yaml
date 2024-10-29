@@ -1,18 +1,19 @@
 --- &1 !ruby/object:Hangman::Game
 guesser: !ruby/object:Hangman::Player
   game: *1
-word: consider
+word: distribute
 letters:
-- c
-- o
-- "n"
-- s
-- i
 - d
-- e
+- i
+- s
+- t
 - r
+- b
+- u
+- e
 wrong_guess:
 - a
+- o
 right_guess:
 - e
-wrong_guesses: 5
+wrong_guesses: 4

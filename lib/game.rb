@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 require_relative 'player'
+require_relative 'hangman'
 require 'yaml'
 
 # Hangmane game on terminal
 module Hangman
   # Handles game loop
   class Game
+    include Hangman
     attr_reader :wrong_guess, :right_guess
 
     MAX_WRONG_GUESS = 6
@@ -30,6 +32,7 @@ module Hangman
         return puts 'You have guessed the word' if @right_guess.sort ==
                                                    @letters.sort
       end
+      print_hangman(@wrong_guesses)
       puts "You have failed to guess the word: \"#{@word}\""
     end
 
@@ -40,6 +43,7 @@ module Hangman
     end
 
     def print_hint
+      print_hangman(@wrong_guesses)
       print_word
       print_guesses('Wrong', @wrong_guess)
       print_guesses('Right', @right_guess)
@@ -59,6 +63,7 @@ module Hangman
 
     def print_word
       puts
+      print ' '
       @word.split('').each do |letter|
         print @right_guess.include?(letter) ? "#{letter} " : '_ '
       end
