@@ -15,7 +15,7 @@ def choice(valid_response, separator)
     print_choices(valid_response, separator)
     choice = gets.chomp.downcase
     valid_response.each do |value|
-      return value if value.slice(0..(choice.length - 1)) == choice
+      return value if value.slice(0..(choice.length - 1)).downcase == choice
     end
   end
 end

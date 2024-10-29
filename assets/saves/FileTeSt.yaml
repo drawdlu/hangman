@@ -1,0 +1,17 @@
+--- &1 !ruby/object:Hangman::Game
+guesser: !ruby/object:Hangman::Player
+  game: *1
+word: witnesses
+letters:
+- w
+- i
+- t
+- "n"
+- e
+- s
+wrong_guess:
+- a
+- d
+right_guess:
+- s
+wrong_guesses: 4
