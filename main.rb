@@ -6,6 +6,7 @@ def load_game?
   puts 'Do you want to load a game?'
   valid_reponse = %w[yes no].freeze
   response = choice(valid_reponse, ' or')
+  puts
   response == 'yes'
 end
 
@@ -22,9 +23,9 @@ end
 def print_choices(choices, separator)
   choices.each do |choice|
     if choice == choices.last
-      print choice
+      print choice.capitalize
     else
-      print "#{choice}#{separator} "
+      print "#{choice.capitalize}#{separator} "
     end
   end
   print ': '
@@ -34,7 +35,8 @@ def choose_file
   start = 'assets/saves/'.length
   last = '.yaml'.length + 1
   files = Dir['assets/saves/*'].map { |name| name.slice(start..-last) }
-  choice(files, ', ')
+  print 'Choose a file to load -> '
+  choice(files, ',')
 end
 
 load = Dir.exist?('assets/saves') ? load_game? : false
@@ -46,7 +48,6 @@ if load
     permitted_classes: [Hangman::Game, Hangman::Player],
     aliases: true
   )
-  game.print_hint
 else
   game = Hangman::Game.new
   game.new_word

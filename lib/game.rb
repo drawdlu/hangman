@@ -22,11 +22,11 @@ module Hangman
 
     def play
       while @wrong_guesses.positive?
+        print_hint
         guess = @guesser.guess_or_save
         return save if guess == 'save'
 
         record_guess(guess)
-        print_hint
         return puts 'You have guessed the word' if @right_guess.sort ==
                                                    @letters.sort
       end
