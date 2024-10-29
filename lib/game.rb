@@ -22,12 +22,12 @@ module Hangman
     def play
       while @wrong_guesses.positive?
         guess = @guesser.guess_or_save
+        return save if guess == 'save'
+
         record_guess(guess)
         print_hint
-        if @right_guess.sort == @letters.sort
-          puts 'You have guessed the word'
-          return
-        end
+        return puts 'You have guessed the word' if @right_guess.sort ==
+                                                   @letters.sort
       end
       puts "You have failed to guess the word: \"#{@word}\""
     end
@@ -68,6 +68,10 @@ module Hangman
       print "#{category}: "
       array.each { |letter| print "#{letter} " }
       puts
+    end
+
+    def save
+      puts 'Successfully saved the game'
     end
   end
 end
