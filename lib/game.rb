@@ -35,11 +35,6 @@ module Hangman
       player_lost
     end
 
-    def player_lost
-      print_hangman(@wrong_guesses)
-      puts "You have failed to guess the word: \"#{@word}\""
-    end
-
     def new_word
       words = File.read('assets/google-10000-english-no-swears.txt').split
       @word = words.sample until @word.length < 13 && @word.length > 4
@@ -55,6 +50,11 @@ module Hangman
     end
 
     private
+
+    def player_lost
+      print_hangman(@wrong_guesses)
+      puts "You have failed to guess the word: \"#{@word}\""
+    end
 
     def record_guess(letter)
       if @letters.include?(letter)
