@@ -5,5 +5,3 @@ source "https://rubygems.org"
 # gem "rails"
 
 gem "rubocop", "~> 1.67"
-
-gem "json", "~> 2.7"
