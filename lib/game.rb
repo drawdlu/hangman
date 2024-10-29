@@ -32,6 +32,10 @@ module Hangman
         return puts 'You have guessed the word' if @right_guess.sort ==
                                                    @letters.sort
       end
+      player_lost
+    end
+
+    def player_lost
       print_hangman(@wrong_guesses)
       puts "You have failed to guess the word: \"#{@word}\""
     end

@@ -2,8 +2,8 @@
 
 require_relative 'lib/game'
 
-def load_game?
-  puts 'Do you want to load a game?'
+def yes?(prompt)
+  puts prompt
   valid_reponse = %w[yes no].freeze
   response = choice(valid_reponse, ' or')
   puts
@@ -39,18 +39,29 @@ def choose_file
   choice(files, ',')
 end
 
-load = Dir.exist?('assets/saves') ? load_game? : false
-
-if load
-  file_name = choose_file
-  game = YAML.load_file(
+def load_save(file_name)
+  YAML.load_file(
     "assets/saves/#{file_name}.yaml",
     permitted_classes: [Hangman::Game, Hangman::Player],
     aliases: true
   )
-else
-  game = Hangman::Game.new
-  game.new_word
 end
 
-game.play
+def start_game
+  load = Dir.exist?('assets/saves') ? yes?("\nDo you want to load a game?") : false
+
+  if load
+    file_name = choose_file
+    game = load_save(file_name)
+  else
+    game = Hangman::Game.new
+    game.new_word
+  end
+
+  game.play
+end
+
+loop do
+  start_game
+  break unless yes?("\nWould you like to play again?")
+end
