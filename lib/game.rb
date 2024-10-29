@@ -6,7 +6,7 @@ require_relative 'player'
 module Hangman
   # Handles game loop
   class Game
-    attr_reader :wrong_guess, :right_guess, :guesser
+    attr_reader :wrong_guess, :right_guess
 
     MAX_WRONG_GUESS = 6
 
@@ -21,7 +21,7 @@ module Hangman
 
     def play
       while @wrong_guesses.positive?
-        guess = @guesser.guess
+        guess = @guesser.guess_or_save
         record_guess(guess)
         print_hint
         if @right_guess.sort == @letters.sort
@@ -37,6 +37,8 @@ module Hangman
       @word = words.sample until @word.length < 13 && @word.length > 4
       @letters = @word.split('').uniq
     end
+
+    private
 
     def record_guess(letter)
       if @letters.include?(letter)
@@ -59,7 +61,7 @@ module Hangman
       @word.split('').each do |letter|
         print @right_guess.include?(letter) ? "#{letter} " : '_ '
       end
-      puts
+      print "\n\n"
     end
 
     def print_guesses(category, array)

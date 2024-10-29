@@ -7,7 +7,7 @@ module Hangman
       @game = game
     end
 
-    def guess
+    def guess_or_save
       loop do
         print 'Pick a letter: '
         letter = gets.chomp.downcase
@@ -15,6 +15,8 @@ module Hangman
         return letter unless letter.length != 1
       end
     end
+
+    private
 
     def guess_includes?(letter)
       @game.wrong_guess.include?(letter) || @game.right_guess.include?(letter)
