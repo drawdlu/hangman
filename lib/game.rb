@@ -39,6 +39,13 @@ module Hangman
       @letters = @word.split('').uniq
     end
 
+    def print_hint
+      print_word
+      print_guesses('Wrong', @wrong_guess)
+      print_guesses('Right', @right_guess)
+      print "You have #{@wrong_guesses} wrong guesses left\n\n"
+    end
+
     private
 
     def record_guess(letter)
@@ -48,13 +55,6 @@ module Hangman
         @wrong_guesses -= 1
         @wrong_guess << letter
       end
-    end
-
-    def print_hint
-      print_word
-      print_guesses('Wrong', @wrong_guess)
-      print_guesses('Right', @right_guess)
-      print "You have #{@wrong_guesses} wrong guesses left\n\n"
     end
 
     def print_word
